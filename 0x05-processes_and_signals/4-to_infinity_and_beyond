@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#Bash script that displays To infinity and beyond indefinitely
+
+cfile="To infinity and beyond"
+
+while true
+do
+	echo "$cfile"
+	sleep 2
+done
