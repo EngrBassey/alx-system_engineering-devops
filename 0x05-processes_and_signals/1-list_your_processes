@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #scripts that list all process
 
-ps -axjf
+ps -auxf
