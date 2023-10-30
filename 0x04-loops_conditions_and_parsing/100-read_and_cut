@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#script to display file usr, id and dir
+
+while read -r p
+do
+	echo "$p" | cut -d ':' -f 1,3,6
+done < /etc/passwd
