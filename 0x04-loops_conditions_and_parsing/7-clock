@@ -3,11 +3,10 @@
 
 i=0
 j=1
-var="Hours:"
 
 while [ $i -le 12 ]
 do
-	echo $var $i
+	echo "$Hour: $i"
 	while [ $j -le 59 ]
 	do
 		echo $j
