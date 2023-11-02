@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#scripts that shows listening sokets
+
+netstat -l --program
