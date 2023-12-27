@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#script to create private key, bits and passphrase
+
+ssh-keygen -b 4096 -f school -t rsa -N betty
