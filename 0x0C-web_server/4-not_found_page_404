@@ -59,4 +59,4 @@ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 # Test nginx configuration and reload
 sudo nginx -t
-sudo service nginx reload
+sudo service nginx restart
