@@ -9,7 +9,7 @@ apt-get update
 apt-get install -y nginx
 
 # Configure Nginx with the custom header
-echo "add_header X-Served-By $HOSTNAME;" >> /etc/nginx/sites-available/default
+echo "add_header X-Served-By $HOSTNAME;" >> /etc/nginx/sites-enabled/default
 
 # Restart Nginx to apply changes
 service nginx restart
