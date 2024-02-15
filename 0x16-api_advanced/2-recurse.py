@@ -1,30 +1,53 @@
 #!/usr/bin/python3
+"""
+Queries the Reddit API and prints the titles of the first 10 hot posts for a given subreddit.
+
+Usage: top_ten(subreddit)
+"""
+
 import requests
 
+def top_ten(subreddit):
+    """
+    Queries the Reddit API and prints the titles of the first 10 hot posts for a given subreddit.
 
-def recurse(subreddit, hot_list=[], after=""):
-    """queries Reddit API and returns list containing the titles of
-    all hot articles for a given subreddit
-
-    Ensure that you are not following redirects.
+    Args:
+        subreddit (str): The name of the subreddit.
 
     Returns:
-        If no results are found for given subreddit, return None
-        If not a valid subreddit, return None.
+        None
     """
-    url_base = 'http://www.reddit.com/r/'
-    url_query = '{:s}/hot.json'.format(subreddit)
-    headers = {'user-agent': 'starcraft'}
-    r = requests.get(url_base + url_query, headers=headers)
+    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+    headers = {'User-Agent': 'my-reddit-client/1.0'}  # Set a custom User-Agent
 
-    if (r.status_code is 302):
-        print("None")
-        return
-    if (r.status_code is 404):
-        return None
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+
+        data = response.json()
+
+        if 'data' in data and 'children' in data['data']:
+            posts = data['data']['children']
+            for post in posts:
+                print(post['data']['title'])
+
+        else:
+            print(None)
+
+    except requests.exceptions.HTTPError as http_err:
+        if response.status_code // 100 == 4:
+            print(None)
+        else:
+            print("HTTP error occurred: {}".format(http_err))
+
+    except Exception as err:
+        print("An error occurred: {}".format(err))
+
+if __name__ == '__main__':
+    import sys
+
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
     else:
-        r = r.json()
-        for post in r['data']['children']:
-            hot_list.append(post['data']['title'])
-
-    return recurse(subreddit, hot_list, after)
+        subreddit_name = sys.argv[1]
+        top_ten(subreddit_name)
