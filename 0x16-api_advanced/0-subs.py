@@ -1,23 +1,23 @@
 #!/usr/bin/python3
+'''
+    this module contains the function number_of_subscribers
+'''
 import requests
+from sys import argv
 
 
 def number_of_subscribers(subreddit):
-    """ query Reddit API and return number of subscribers for given subreddit
-    If an invalid subreddit is given, the function should return 0.
-    Hint: ensure you're setting a custom User-Agent.
-    boEnsure that you are not following redirects.
-    Requirements:
-    Prototype: def number_of_subscribers(subreddit)
-    If not a valid subreddit, return 0.
-    """
-    url = "http://www.reddit.com/r/{:s}/about.json".format(subreddit)
-    headers = {'user-agent': 'egsyquest'}
-    r = requests.get(url, headers=headers)
-
-    if (r.status_code is 302):
-        return 0
-    if (r.status_code is 404):
+    '''
+        returns the number of subscribers for a given subreddit
+    '''
+    user = {'User-Agent': 'Lizzie'}
+    url = requests.get('https://www.reddit.com/r/{}/about.json'
+                       .format(subreddit), headers=user).json()
+    try:
+        return url.get('data').get('subscribers')
+    except Exception:
         return 0
 
-    return r.json()['data'].get('subscribers', 0)
+
+if __name__ == "__main__":
+    number_of_subscribers(argv[1])
